@@ -9,55 +9,67 @@ public class Compressor {
     public Compressor(String text) {
         this.text = text;
         counts = new HashMap<>();
+        codes = new HashMap<>();
     }
 
-    private void findCounts(){
+    private void findCounts() {
         for (int i = 0; i < text.length(); i++) {
             char temp = text.charAt(i);
-            if(!counts.containsKey(temp)){
+            if (!counts.containsKey(temp)) {
                 counts.put(temp, 0);
             }
             counts.replace(temp, counts.get(temp) + 1);
         }
     }
 
-    private void makeQueue(){
+    private void makeQueue() {
         findCounts();
         queue = new Queue(counts.size());
-        counts.forEach((k,v)->{
+        counts.forEach((k, v) -> {
             try {
-                queue.enqueue(new Tree(new Node(k.toString() , v)));
+                queue.enqueue(new Tree(new Node(k.toString(), v)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
-    private void readTree(Node root , String code){
-        if(root.right==null&&root.left==null){
-            codes.put(root.data.charAt(0) , code);
+    private void readTree(Node root, String code) {
+        if (root.right == null && root.left == null) {
+            codes.put(root.data.charAt(0), code);
         }
-        if (root.right!=null){
-            readTree(root.right , code+"1");
+        if (root.right != null) {
+            readTree(root.right, code + "1");
         }
-        if (root.left!=null) {
-            readTree(root.left , code+"0");
+        if (root.left != null) {
+            readTree(root.left, code + "0");
         }
     }
 
-    public void compress() throws Exception {
+    private String convertText() {
+        String result = "";
+        for (int i = 0; i < text.length(); i++) {
+            result = result.concat(codes.get(text.charAt(i)));
+        }
+        return result;
+    }
+
+    private String codesToString() {
+        return codes.toString().replace("{", "").replace("}", "").replace(
+                " ", "") + "\n";
+    }
+
+    public String compress() throws Exception {
         makeQueue();
-        while (queue.getSize()>1){
+        while (queue.getSize() > 1) {
             Tree one = queue.dequeue();
             Tree two = queue.dequeue();
-            Tree merged = new Tree(one.getRoot() , two.getRoot());
+            Tree merged = new Tree(one.getRoot(), two.getRoot());
             queue.enqueue(merged);
         }
         Tree res = queue.dequeue();
-        readTree(res.getRoot() , "");
-
-
-
+        readTree(res.getRoot(), "");
+        return codesToString().concat(convertText());
     }
 
 
