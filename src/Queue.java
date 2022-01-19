@@ -30,6 +30,10 @@ class Queue {
         return size == rear;
     }
 
+    public int getSize(){
+        return rear-front;
+    }
+
     public Tree dequeue() {
         if (isEmpty()) {
             return null;
