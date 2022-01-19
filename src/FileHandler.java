@@ -1,8 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.io.*;
 
 public class FileHandler {
 
@@ -21,14 +17,14 @@ public class FileHandler {
            String res= "";
            String path = input.isEmpty() ?  "output.txt" : input;
            File f = new File(path);
-           Scanner reader = new Scanner(f);
-           while (reader.hasNextLine()){
-               res = res.concat(reader.nextLine()+ "\n");
+           FileInputStream fis = new FileInputStream(f);
+           int content;
+           while ((content = fis.read()) != -1) {
+               res+= (char)content;
            }
-           reader.close();
            return res;
 
-       }catch (FileNotFoundException e){
+       }catch (IOException e){
            e.printStackTrace();
        }
        return null;
