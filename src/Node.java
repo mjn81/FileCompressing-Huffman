@@ -1,11 +1,17 @@
 public class Node {
-    char data;
+    String data;
     int repeat;
-    Node left , right;
-    public Node(char data , int repeat){
-        this.data =data;
+    Node left, right;
+
+    public Node(String data, int repeat) {
+        this.data = data;
         this.repeat = repeat;
-        this.left=null;
-        this.right=null;
+        this.left = null;
+        this.right = null;
+    }
+
+    @Override
+    public String toString() {
+        return data;
     }
 }
