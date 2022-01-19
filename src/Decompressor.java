@@ -19,16 +19,16 @@ public class Decompressor {
 
     public String decompress() {
         makeCodeTable();
-        String result = "";
+        StringBuilder result = new StringBuilder();
         String context = encoded.split("\n")[1];
         String temp = "";
         for (int i = 0; i < context.length(); i++) {
             temp += context.charAt(i);
             if (codes.containsKey(temp)) {
-                result += codes.get(temp);
+                result.append(codes.get(temp));
                 temp = "";
             }
         }
-        return result;
+        return result.toString();
     }
 }
