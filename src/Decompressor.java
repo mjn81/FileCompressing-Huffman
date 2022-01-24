@@ -26,13 +26,14 @@ public class Decompressor extends CD {
     public String decompress() throws Exception {
         makeCodes();
         String temp = "";
+        StringBuilder res = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
             temp += text.charAt(i);
             if (codes.containsKey(temp)) {
-                text += codes.get(temp);
+                res.append(codes.get(temp));
                 temp = "";
             }
         }
-        return text;
+        return res.toString();
     }
 }

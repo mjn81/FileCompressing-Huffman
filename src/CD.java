@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public abstract class CD {
+public class CD {
     protected String text;
     HashMap<Character, Integer> counts;
     HashMap<Character, String> codes;
