@@ -1,34 +1,38 @@
 import java.util.HashMap;
 
-public class Decompressor {
-    private String encoded;
+public class Decompressor extends CD {
+
     HashMap<String, Character> codes;
 
-    public Decompressor(String encoded) {
-        this.encoded = encoded;
+    public Decompressor(String encoded, HashMap<Character, Integer> counts) {
+        this.text = encoded;
+        this.counts = counts;
         codes = new HashMap<>();
     }
 
-    private void makeCodeTable() {
-        String[] codesData = encoded.split("\n")[0].split(",");
-        for (String code : codesData) {
-            String[] temp = code.split("=");
-            codes.put(temp[1], temp[0].charAt(0));
+    @Override
+    protected void readTree(Node root, String code) {
+        if (root.right == null && root.left == null) {
+            codes.put(code, root.data.charAt(0));
+        }
+        if (root.right != null) {
+            readTree(root.right, code + "1");
+        }
+        if (root.left != null) {
+            readTree(root.left, code + "0");
         }
     }
 
-    public String decompress() {
-        makeCodeTable();
-        StringBuilder result = new StringBuilder();
-        String context = encoded.split("\n")[1];
+    public String decompress() throws Exception {
+        makeCodes();
         String temp = "";
-        for (int i = 0; i < context.length(); i++) {
-            temp += context.charAt(i);
+        for (int i = 0; i < text.length(); i++) {
+            temp += text.charAt(i);
             if (codes.containsKey(temp)) {
-                result.append(codes.get(temp));
+                text += codes.get(temp);
                 temp = "";
             }
         }
-        return result.toString();
+        return text;
     }
 }
