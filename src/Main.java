@@ -9,7 +9,7 @@ public class Main {
         String txt , res="";
         switch (decider) {
             case 1 -> {
-                txt = scan.nextLine();
+                txt= scan.nextLine();
                 Compressor compress = new Compressor(txt);
                 res = compress.compress();
             }
@@ -28,6 +28,5 @@ public class Main {
             }
         }
         System.out.println(res);
-
     }
 }

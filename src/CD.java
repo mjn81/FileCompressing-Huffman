@@ -32,6 +32,7 @@ public class CD {
     protected void makeCodes() throws Exception {
         makeQueue();
         while (queue.getSize() > 1) {
+            queue.print();
             Tree one = queue.dequeue();
             Tree two = queue.dequeue();
             Tree merged = new Tree(one.getRoot(), two.getRoot());

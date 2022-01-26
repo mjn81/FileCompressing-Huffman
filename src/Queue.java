@@ -48,9 +48,11 @@ class Queue {
         return data;
     }
 
+
+
     void sort() {
         boolean isSorted = false;
-        for (int i = front; i < rear - 1 && !isSorted; i++) {
+        for (int i = front; i < rear -1  && !isSorted; i++) {
             isSorted = true;
             for (int j = front; j < rear - 1 - i; j++) {
                 if (dataList[j].getRoot().repeat > dataList[j + 1].getRoot().repeat) {
@@ -59,7 +61,20 @@ class Queue {
                     dataList[j] = dataList[j + 1];
                     dataList[j + 1] = temp;
                 }
+                else if (dataList[j].getRoot().repeat == dataList[j + 1].getRoot().repeat && dataList[j].getRoot().data.compareTo(dataList[j+1].getRoot().data) < 0){
+                    isSorted = false;
+                    Tree temp = dataList[j];
+                    dataList[j] = dataList[j + 1];
+                    dataList[j + 1] = temp;
+                }
             }
         }
+    }
+
+    void print(){
+        for (int i = front; i <rear ; i++) {
+            System.out.print(dataList[i].getRoot() +" ");
+        }
+        System.out.println();
     }
 }
